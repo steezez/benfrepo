@@ -1,1 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page 4</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+ body, .header, .header-title, .back-arrow, #timer {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+html, body {
+  touch-action: pan-x pan-y;
+}
+  html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* no scrolling at all */
+    background: white;
+}
+  /* Slide-in animation for the whole page */
+  #page-wrapper {
+    width: 100%;
+    height: 100%;
+    transform: translateY(100%);
+    animation: slideUp 0.45s ease forwards;
+  }
 
+  @keyframes slideUp {
+    to { transform: translateY(0); }
+  }
+
+  /* HEADER */
+  .header {
+    width: 100%;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 0;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15); /* subtle line/shadow */
+    position: relative;
+    z-index: 100;
+  }
+
+  .header-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: #3a3a3a; /* slightly lighter gray */
+  }
+
+  .back-arrow {
+    position: absolute;
+    right: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    color: #2a2a2a; /* slightly darker than title */
+  }
+
+  /* TIMER */
+  #timer {
+    position: absolute;
+    top: 430px; /* below header */
+    left: 64%;
+    transform: translateX(-50%);
+    font-size: 24px;
+    font-weight: 700;
+    color: #1f2025;
+    z-index: 50;
+  }
+
+  /* CONTENT */
+  .content {
+    width: 100%;
+    height: calc(100% - 60px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+  }
+
+  .image-container {
+    width: 100vw;
+}
+
+.image-container img {
+    width: 100vw;
+    height: auto;      /* THIS is the important line */
+    display: block;
+}
+  .invisible-button {
+    position: absolute;
+    cursor: pointer;
+    text-decoration: none;
+    z-index: 50;
+  }
+
+  /* Example button positions */
+  .btn-permit { left: 7%; top: 48%; width: 26%; height: 4.5%; }
+  .btn-identity { left: 37%; top: 48%; width: 26%; height: 4.5%; }
+  .btn-age { left: 67.7%; top: 48%; width: 26.3%; height: 4.5%; }
+
+</style>
+</head>
+<body>
+
+<div id="page-wrapper">
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-title">Verify Licence</div>
+    <div class="back-arrow">Close</div>
+  </div>
+
+  <!-- TIMER -->
+  <div id="timer">02:00</div>
+
+  <!-- CONTENT -->
+  <div class="content">
+    <div class="image-container">
+<img src="data:image/png;base64, "alt="">
+      <a href="main1.html" class="invisible-button btn-permit"></a>
+      <a href="page2.html" class="invisible-button btn-identity"></a>
+      <a href="page3.html" class="invisible-button btn-age"></a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Close button
+  document.querySelector('.back-arrow').addEventListener('click', () => {
+    window.location.href = 'main1.html';
+  });
+
+  // Page links
+  document.querySelectorAll('a.invisible-button').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      window.location.href = link.getAttribute('href');
+    });
+  });
+
+  // TIMER
+  let timeLeft = 120; // 2 minutes
+  const timerEl = document.getElementById('timer');
+
+  function updateTimer() {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    timerEl.textContent = `${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
+  }
+
+  // Initialize timer display immediately
+  updateTimer();
+
+  const interval = setInterval(() => {
+    timeLeft--;
+    updateTimer();
+
+    if (timeLeft <= 0) {
+      clearInterval(interval);
+      timerEl.textContent = '00:00';
+    }
+  }, 1000);
+</script>
+<script>
+document.addEventListener('gesturestart', function (e) {
+  e.preventDefault();
+});
+document.addEventListener('gesturechange', function (e) {
+  e.preventDefault();
+});
+document.addEventListener('gestureend', function (e) {
+  e.preventDefault();
+});
+</script>
+</body>
+</html>
